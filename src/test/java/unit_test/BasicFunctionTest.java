@@ -15,7 +15,7 @@ class BasicFunctionTest {
     private static String result;
 
     @BeforeAll
-    static void enterCity() throws JSONException {
+    static void enterCity() {
         Main app = new Main();
         String city = "Tallinn";
         System.setIn(new ByteArrayInputStream(city.getBytes()));
@@ -31,11 +31,11 @@ class BasicFunctionTest {
 
     @Test
     void outputShouldContainsCoordinates(){
-        assertTrue(result.contains("coordinates:"));
+        assertTrue(result.contains("\"coordinates\":\"59.437, 24.7535\""));
     }
 
     @Test
     void outputShouldContainsTemperatureUnits(){
-        assertTrue(result.contains("temperatureUnit"));
+        assertTrue(result.contains("\"temperatureUnit\":\"Celsius\""));
     }
 }

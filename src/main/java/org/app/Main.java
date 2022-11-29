@@ -16,9 +16,15 @@ public class Main {
             String city = scanner.next();
             scanner.close();
 
+            MainDetailsDto mainDetailsDto = new WeatherApi().getMainData(city);
+
+
             JSONObject mainDetails = new JSONObject();
             JSONObject output = new JSONObject();
 
+            mainDetails.put("city", mainDetailsDto.getCity());
+            mainDetails.put("coordinates", mainDetailsDto.getCoordinates().getLatAndLon());
+            mainDetails.put("temperatureUnit", mainDetailsDto.getMain().getTemperatureUnit());
             output.put("mainDetails", mainDetails);
 
             System.out.println(output);
