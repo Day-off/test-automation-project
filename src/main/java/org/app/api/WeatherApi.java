@@ -4,6 +4,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import org.app.api.dto.CurrentWeatherReportDto;
 import org.app.api.dto.MainDetailsDto;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 
@@ -38,5 +39,11 @@ public class WeatherApi {
 
     }
 
+    public CurrentWeatherReportDto getCurrentWeatherReportDto(String cityName) {
+        Client client = configureClient();
+        ClientResponse response = getClientResponse(client, cityName);
+
+        return response.getEntity(CurrentWeatherReportDto.class);
+    }
 }
 

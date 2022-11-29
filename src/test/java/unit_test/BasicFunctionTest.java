@@ -1,7 +1,6 @@
 package unit_test;
 
 import org.app.Main;
-import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -42,6 +41,14 @@ class BasicFunctionTest {
     @Test
     void outputShouldContainsCurrentWeatherReport(){
         assertTrue(result.contains("currentWeatherReport"));
+    }
+    @Test
+    void outputShouldContainsTemperature(){
+        assertTrue(result.contains("temperature"));
+    }
+    @Test
+    void outputShouldContainsPressure(){
+        assertTrue(result.contains("pressure"));
     }
 
 }
