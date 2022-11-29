@@ -28,4 +28,14 @@ class BasicFunctionTest {
     void outputShouldContainsMainDetails(){
         assertTrue(result.contains("mainDetails"));
     }
+
+    @Test
+    void outputShouldContainsCoordinates(){
+        assertTrue(result.contains("coordinates:"));
+    }
+
+    @Test
+    void outputShouldContainsTemperatureUnits(){
+        assertTrue(result.contains("temperatureUnit"));
+    }
 }
