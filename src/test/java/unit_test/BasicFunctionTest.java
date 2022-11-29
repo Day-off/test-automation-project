@@ -38,4 +38,10 @@ class BasicFunctionTest {
     void outputShouldContainsTemperatureUnits(){
         assertTrue(result.contains("\"temperatureUnit\":\"Celsius\""));
     }
+
+    @Test
+    void outputShouldContainsCurrentWeatherReport(){
+        assertTrue(result.contains("currentWeatherReport"));
+    }
+
 }
