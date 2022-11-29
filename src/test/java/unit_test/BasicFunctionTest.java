@@ -1,7 +1,9 @@
 package unit_test;
 
+import org.app.Main;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -12,13 +14,13 @@ class BasicFunctionTest {
 
     private static String result;
 
-    @Test
-    void enterCity() throws JSONException {
+    @BeforeAll
+    static void enterCity() throws JSONException {
         Main app = new Main();
         String city = "Tallinn";
         System.setIn(new ByteArrayInputStream(city.getBytes()));
 
-        JSONObject cityData = app.getInfoAboutCity();
+        JSONObject cityData = app.getInfoAboutWeather();
         result = cityData.toString();
     }
 
