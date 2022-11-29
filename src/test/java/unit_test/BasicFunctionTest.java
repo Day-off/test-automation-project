@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,31 +25,46 @@ class BasicFunctionTest {
     }
 
     @Test
-    void outputShouldContainsMainDetails(){
+    void outputShouldContainsMainDetails() {
         assertTrue(result.contains("mainDetails"));
     }
 
     @Test
-    void outputShouldContainsCoordinates(){
+    void outputShouldContainsCoordinates() {
         assertTrue(result.contains("\"coordinates\":\"59.437, 24.7535\""));
     }
 
     @Test
-    void outputShouldContainsTemperatureUnits(){
+    void outputShouldContainsTemperatureUnits() {
         assertTrue(result.contains("\"temperatureUnit\":\"Celsius\""));
     }
 
     @Test
-    void outputShouldContainsCurrentWeatherReport(){
+    void outputShouldContainsCurrentWeatherReport() {
         assertTrue(result.contains("currentWeatherReport"));
     }
+
     @Test
-    void outputShouldContainsTemperature(){
+    void outputShouldContainsTemperature() {
         assertTrue(result.contains("temperature"));
     }
+
     @Test
-    void outputShouldContainsPressure(){
+    void outputShouldContainsPressure() {
         assertTrue(result.contains("pressure"));
+    }
+
+    @Test
+    void outputShouldContainsCityName() {
+        List<String> cities = List.of("Narva", "Tartu", "Paris");
+        for (String city : cities) {
+            Main app = new Main();
+            System.setIn(new ByteArrayInputStream(city.getBytes()));
+
+            JSONObject cityData = app.getInfoAboutWeather();
+            String result = cityData.toString();
+            assertTrue(result.contains("\"city\":" + "\"" + city + "\""));
+        }
     }
 
 }
