@@ -10,6 +10,6 @@ public class CoordinatesDto {
     private double lon;
 
     public String getLatAndLon() {
-        return String.valueOf(lat) + ", " + String.valueOf(lon);
+        return lat + ", " + lon;
     }
 }
