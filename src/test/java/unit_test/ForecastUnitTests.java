@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,6 +36,16 @@ class ForecastUnitTests {
         JSONArray actualForecast = result.getJSONArray("forecastReport");
         assertThat(actualForecast.length()).isEqualTo(3);
     }
+
+    @Test
+    void outputShouldContainsForecastDiffFromCurrentDay() throws JSONException {
+        JSONArray actualForecast = result.getJSONArray("forecastReport");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+        assertThat(actualForecast.getJSONObject(0).getString("date")).isNotEqualTo(formatter.format(new Date()));
+    }
+
+
 
 
 }
