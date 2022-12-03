@@ -18,7 +18,17 @@ class WeatherApiTests {
 
     @Test
     void requestWithCityNameReturnsDtoWithGivenCityName() {
-        MainDetailsDto actualDto = weatherApi.getMainData(CITY);
+        MainDetailsDto actualDto = weatherApi.getMainDataDto(CITY);
         assertThat(actualDto.getCity()).isEqualTo(CITY);
+    }
+
+    @Test
+    void requestWithCityNameReturnsDtoWithRightCoords() {
+        Double expectedLat = 59.437;
+        Double expectedLon = 24.7535;
+
+        MainDetailsDto actualDto = weatherApi.getMainDataDto(CITY);
+
+        assertThat(actualDto.getCoordinates()).extracting("lat", "lon").contains(expectedLat, expectedLon);
     }
 }

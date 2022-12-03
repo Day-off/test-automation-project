@@ -14,7 +14,7 @@ import static com.sun.jersey.api.json.JSONConfiguration.FEATURE_POJO_MAPPING;
 public class WeatherApi {
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5";
     public static final String API_KEY = "30cedc93688377bea3b5d76eef35d77f";
-    private static final String resourceUrl = BASE_URL + "/weather";
+    private static final String RESOURCE_URL = BASE_URL + "/weather";
 
     private Client configureClient() {
         ClientConfig configuration = new DefaultClientConfig();
@@ -24,14 +24,14 @@ public class WeatherApi {
     }
 
     private ClientResponse getClientResponse(Client client, String cityName){
-        return client.resource(resourceUrl)
+        return client.resource(RESOURCE_URL)
                 .queryParam("q", cityName)
                 .queryParam("appid", API_KEY)
                 .queryParam("units", "metric")
                 .get(ClientResponse.class);
     }
 
-    public MainDetailsDto getMainData(String cityName) {
+    public MainDetailsDto getMainDataDto(String cityName) {
         Client client = configureClient();
         ClientResponse response = getClientResponse(client, cityName);
 

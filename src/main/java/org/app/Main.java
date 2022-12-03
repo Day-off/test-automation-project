@@ -19,7 +19,7 @@ public class Main {
             String city = scanner.next();
             scanner.close();
 
-            MainDetailsDto mainDetailsDto = new WeatherApi().getMainData(city);
+            MainDetailsDto mainDetailsDto = new WeatherApi().getMainDataDto(city);
             CurrentWeatherReportDto currentWeatherReportDto = new WeatherApi().getCurrentWeatherReportDto(city);
 
             JSONObject output = new JSONObject();

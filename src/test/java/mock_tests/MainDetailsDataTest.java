@@ -39,23 +39,23 @@ class MainDetailsDataTest {
 
     @Test
     void mainDetailsShouldContainsRightCityName() {
-        when(weatherApiMock.getMainData(Mockito.anyString()))
+        when(weatherApiMock.getMainDataDto(Mockito.anyString()))
                 .thenReturn(mainDetailsDto);
-        assertThat(weatherApiMock.getMainData(city).getCity()).isEqualTo(city);
+        assertThat(weatherApiMock.getMainDataDto(city).getCity()).isEqualTo(city);
     }
 
     @Test
     void mainDetailsShouldContainsRightCoords() {
-        when(weatherApiMock.getMainData(Mockito.anyString()))
+        when(weatherApiMock.getMainDataDto(Mockito.anyString()))
                 .thenReturn(mainDetailsDto);
-        assertThat(weatherApiMock.getMainData(city).getCoordinates().getLatAndLon()).isEqualTo("-12.0, 12.0");
+        assertThat(weatherApiMock.getMainDataDto(city).getCoordinates().getLatAndLon()).isEqualTo("-12.0, 12.0");
     }
 
     @Test
     void mainDetailsTemperatureUnitsShouldBeCelsius() {
-        when(weatherApiMock.getMainData(Mockito.anyString()))
+        when(weatherApiMock.getMainDataDto(Mockito.anyString()))
                 .thenReturn(mainDetailsDto);
-        assertThat(weatherApiMock.getMainData(city).getMain().getTemperatureUnit()).isEqualTo("Celsius");
+        assertThat(weatherApiMock.getMainDataDto(city).getMain().getTemperatureUnit()).isEqualTo("Celsius");
     }
 
 
