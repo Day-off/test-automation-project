@@ -68,4 +68,9 @@ public class FullWeatherReport {
 
     }
 
+    public static void main(String[] args) {
+        JSONObject res = new FullWeatherReport().getInfoAboutWeather();
+        log.info(res.toString());
+    }
+
 }
