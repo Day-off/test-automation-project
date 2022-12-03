@@ -1,9 +1,9 @@
 package mock_tests;
 
 import org.app.api.WeatherApi;
-import org.app.api.dto.CoordinatesDto;
 import org.app.api.dto.MainDetailsDto;
-import org.app.api.dto.TemperatureUnitDto;
+import org.app.api.dto.details.CoordinatesDto;
+import org.app.api.dto.details.TemperatureUnitDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

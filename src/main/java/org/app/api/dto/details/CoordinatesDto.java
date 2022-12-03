@@ -1,4 +1,4 @@
-package org.app.api.dto;
+package org.app.api.dto.details;
 
 import lombok.Data;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;

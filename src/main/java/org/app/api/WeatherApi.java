@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import org.app.api.dto.CurrentWeatherReportDto;
+import org.app.api.dto.ForecastReportDto;
 import org.app.api.dto.MainDetailsDto;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 
@@ -16,6 +17,8 @@ public class WeatherApi {
     public static final String API_KEY = "30cedc93688377bea3b5d76eef35d77f";
     private static final String RESOURCE_URL = BASE_URL + "/weather";
 
+    private static final String FORECAST_URL = BASE_URL + "/forecast";
+
     private Client configureClient() {
         ClientConfig configuration = new DefaultClientConfig();
         configuration.getClasses().add(JacksonJaxbJsonProvider.class);
@@ -23,8 +26,8 @@ public class WeatherApi {
         return create(configuration);
     }
 
-    private ClientResponse getClientResponse(Client client, String cityName){
-        return client.resource(RESOURCE_URL)
+    private ClientResponse getClientResponse(String url, Client client, String cityName) {
+        return client.resource(url)
                 .queryParam("q", cityName)
                 .queryParam("appid", API_KEY)
                 .queryParam("units", "metric")
@@ -33,7 +36,7 @@ public class WeatherApi {
 
     public MainDetailsDto getMainDataDto(String cityName) {
         Client client = configureClient();
-        ClientResponse response = getClientResponse(client, cityName);
+        ClientResponse response = getClientResponse(RESOURCE_URL, client, cityName);
 
         return response.getEntity(MainDetailsDto.class);
 
@@ -41,9 +44,15 @@ public class WeatherApi {
 
     public CurrentWeatherReportDto getCurrentWeatherReportDto(String cityName) {
         Client client = configureClient();
-        ClientResponse response = getClientResponse(client, cityName);
+        ClientResponse response = getClientResponse(RESOURCE_URL, client, cityName);
 
         return response.getEntity(CurrentWeatherReportDto.class);
+    }
+
+    public ForecastReportDto getFreeDaysForecastDto(String cityName) {
+        Client client = configureClient();
+        ClientResponse response = getClientResponse(FORECAST_URL, client, cityName);
+        return response.getEntity(ForecastReportDto.class);
     }
 }
 

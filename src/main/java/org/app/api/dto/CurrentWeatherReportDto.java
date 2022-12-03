@@ -2,6 +2,7 @@ package org.app.api.dto;
 
 
 import lombok.Data;
+import org.app.api.dto.details.MainDto;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.text.SimpleDateFormat;

@@ -1,6 +1,8 @@
 package org.app.api.dto;
 
 import lombok.Data;
+import org.app.api.dto.details.CoordinatesDto;
+import org.app.api.dto.details.TemperatureUnitDto;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
