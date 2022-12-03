@@ -51,7 +51,7 @@ class FullWeatherReportForecastTests {
             weatherReports[i] = weatherReport;
         }
 
-        forecastDto.setList(weatherReports);
+        forecastDto.setFreeDaysReports(weatherReports);
     }
 
     @Test
@@ -59,9 +59,9 @@ class FullWeatherReportForecastTests {
         when(weatherApiMock.getFreeDaysForecastDto(
                 Mockito.anyString()))
                 .thenReturn(forecastDto);
-        assertThat(weatherApiMock.getFreeDaysForecastDto(city).getList()[0].getDt()).isNotEqualTo(formatter.format(new Date()));
-        assertThat(weatherApiMock.getFreeDaysForecastDto(city).getList()[1].getDt()).isNotEqualTo(formatter.format(new Date()));
-        assertThat(weatherApiMock.getFreeDaysForecastDto(city).getList()[2].getDt()).isNotEqualTo(formatter.format(new Date()));
+        assertThat(weatherApiMock.getFreeDaysForecastDto(city).getFreeDaysReports()[0].getDt()).isNotEqualTo(formatter.format(new Date()));
+        assertThat(weatherApiMock.getFreeDaysForecastDto(city).getFreeDaysReports()[1].getDt()).isNotEqualTo(formatter.format(new Date()));
+        assertThat(weatherApiMock.getFreeDaysForecastDto(city).getFreeDaysReports()[2].getDt()).isNotEqualTo(formatter.format(new Date()));
     }
 
 

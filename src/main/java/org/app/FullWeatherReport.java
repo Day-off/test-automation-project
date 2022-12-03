@@ -10,7 +10,6 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 @Log
@@ -49,21 +48,13 @@ public class FullWeatherReport {
     }
 
     private static JSONArray getForecastReport(ForecastReportDto freeDaysForecastDto) throws JSONException {
-        WeatherReport[] freeDays = Arrays.copyOfRange(freeDaysForecastDto.getList(),
-                1, freeDaysForecastDto.getList().length);
         JSONArray forecastReport = new JSONArray();
-        String check = "";
-        for (WeatherReport weatherReport : freeDays) {
-            if (forecastReport.length() >= 3) {
-                break;
-            }
+        for (WeatherReport weatherReport : freeDaysForecastDto.getFreeDaysReports()) {
             JSONObject report = new JSONObject();
             JSONObject weather = new JSONObject();
-            if (check.isEmpty() || !check.equals(weatherReport.getDt())) {
-                setWeatherReport(forecastReport, weatherReport, report, weather);
-                check = weatherReport.getDt();
-            }
+            setWeatherReport(forecastReport, weatherReport, report, weather);
         }
+
         return forecastReport;
     }
 
