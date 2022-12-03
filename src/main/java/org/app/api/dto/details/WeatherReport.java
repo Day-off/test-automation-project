@@ -24,8 +24,7 @@ public class WeatherReport {
             Date d = formatter2.parse(dt);
             return formatter.format(d);
         } catch (Exception e) {
-            e.printStackTrace();
+            return dt;
         }
-        return "";
     }
 }
