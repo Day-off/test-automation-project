@@ -31,4 +31,13 @@ class WeatherApiTests {
 
         assertThat(actualDto.getCoordinates()).extracting("lat", "lon").contains(expectedLat, expectedLon);
     }
+
+    @Test
+    void requestWithCityNameReturnsDtoWithTemperatureUnit() {
+        String expectedTemperatureUnit = "Celsius";
+
+        MainDetailsDto actualDto = weatherApi.getMainDataDto(CITY);
+
+        assertThat(actualDto.getMain().getTemperatureUnit()).isEqualTo(expectedTemperatureUnit);
+    }
 }
