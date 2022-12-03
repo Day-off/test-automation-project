@@ -1,6 +1,6 @@
 package unit_test;
 
-import org.app.Main;
+import org.app.FullWeatherReport;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,11 +16,11 @@ class BasicFunctionTest {
 
     @BeforeAll
     static void enterCity() {
-        Main app = new Main();
+        FullWeatherReport fullWeatherReport = new FullWeatherReport();
         String city = "Tallinn";
         System.setIn(new ByteArrayInputStream(city.getBytes()));
 
-        JSONObject cityData = app.getInfoAboutWeather();
+        JSONObject cityData = fullWeatherReport.getInfoAboutWeather();
         result = cityData.toString();
     }
 
@@ -58,10 +58,10 @@ class BasicFunctionTest {
     void outputShouldContainsCityName() {
         List<String> cities = List.of("Narva", "Tartu", "Paris");
         for (String city : cities) {
-            Main app = new Main();
+            FullWeatherReport fullWeatherReport = new FullWeatherReport();
             System.setIn(new ByteArrayInputStream(city.getBytes()));
 
-            JSONObject cityData = app.getInfoAboutWeather();
+            JSONObject cityData = fullWeatherReport.getInfoAboutWeather();
             String result = cityData.toString();
             assertTrue(result.contains("\"city\":" + "\"" + city + "\""));
         }

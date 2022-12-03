@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-class MainDetailsDataTest {
+class FullWeatherReportDetailsDataTest {
 
     @Mock
     private static WeatherApi weatherApiMock;

@@ -10,7 +10,7 @@ import org.codehaus.jettison.json.JSONObject;
 import java.util.Scanner;
 
 @Log
-public class Main {
+public class FullWeatherReport {
 
     public JSONObject getInfoAboutWeather() {
         try {
