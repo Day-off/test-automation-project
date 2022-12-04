@@ -20,7 +20,7 @@ class FullWeatherReportTests {
     public void initializeCurrentWeatherHandler() throws JSONException {
         FullWeatherReport fullWeatherReport = new FullWeatherReport();
         System.setIn(new ByteArrayInputStream(CITY.getBytes()));
-        JSONObject report = fullWeatherReport.getInfoAboutWeather();
+        JSONObject report = fullWeatherReport.getReportFromStdin();
         mainDetails = report.getJSONObject("mainDetails");
     }
 

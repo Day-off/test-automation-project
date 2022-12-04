@@ -23,7 +23,7 @@ class ForecastUnitTests {
         String city = "Tallinn";
         System.setIn(new ByteArrayInputStream(city.getBytes()));
 
-        result = fullWeatherReport.getInfoAboutWeather();
+        result = fullWeatherReport.getReportFromStdin();
     }
 
     @Test

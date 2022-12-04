@@ -15,13 +15,8 @@ import java.util.Scanner;
 @Log
 public class FullWeatherReport {
 
-    public JSONObject getInfoAboutWeather() {
+    public JSONObject getReportFromStdin(String city) {
         try {
-            log.info("Enter city: ");
-            Scanner scanner = new Scanner(System.in);
-            String city = scanner.next();
-            scanner.close();
-
             MainDetailsDto mainDetailsDto = new WeatherApi().getMainDataDto(city);
             CurrentWeatherReportDto currentWeatherReportDto = new WeatherApi().getCurrentWeatherReportDto(city);
             ForecastReportDto freeDaysForecastDto = new WeatherApi().getFreeDaysForecastDto(city);
@@ -40,6 +35,14 @@ public class FullWeatherReport {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public JSONObject getReportFromStdin() {
+        log.info("Enter city: ");
+        Scanner scanner = new Scanner(System.in);
+        String city = scanner.next();
+        scanner.close();
+        return getReportFromStdin(city);
     }
 
     private static void setForecastReport(ForecastReportDto freeDaysForecastDto, JSONObject output) throws JSONException {
@@ -97,6 +100,5 @@ public class FullWeatherReport {
 
 
     }
-
 
 }

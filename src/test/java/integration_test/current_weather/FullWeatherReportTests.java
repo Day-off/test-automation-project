@@ -22,7 +22,7 @@ class FullWeatherReportTests {
         FullWeatherReport fullWeatherReport = new FullWeatherReport();
         String CITY = "Tallinn";
         System.setIn(new ByteArrayInputStream(CITY.getBytes()));
-        JSONObject report = fullWeatherReport.getInfoAboutWeather();
+        JSONObject report = fullWeatherReport.getReportFromStdin();
         currentWeatherDetails = report.getJSONObject("currentWeatherReport");
     }
 

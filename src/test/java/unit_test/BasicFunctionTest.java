@@ -20,7 +20,7 @@ class BasicFunctionTest {
         String city = "Tallinn";
         System.setIn(new ByteArrayInputStream(city.getBytes()));
 
-        JSONObject cityData = fullWeatherReport.getInfoAboutWeather();
+        JSONObject cityData = fullWeatherReport.getReportFromStdin();
         result = cityData.toString();
     }
 
@@ -61,7 +61,7 @@ class BasicFunctionTest {
             FullWeatherReport fullWeatherReport = new FullWeatherReport();
             System.setIn(new ByteArrayInputStream(city.getBytes()));
 
-            JSONObject cityData = fullWeatherReport.getInfoAboutWeather();
+            JSONObject cityData = fullWeatherReport.getReportFromStdin();
             String result = cityData.toString();
             assertTrue(result.contains("\"city\":" + "\"" + city + "\""));
         }
