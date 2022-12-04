@@ -51,7 +51,7 @@ public class FullWeatherReport {
     public List<String> readFromFile(String fileName) {
         List<String> cities = new ArrayList<>();
         try {
-            File file = new File(fileName);
+            File file = new File("src/main/resources/input/" + fileName);
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
@@ -65,27 +65,27 @@ public class FullWeatherReport {
         return cities;
     }
 
-    public void writeToFile(JSONObject output){
+    public void writeToFile(JSONObject output) {
         try {
-                FileWriter file = new FileWriter("src/main/resources/output/output.json");
-                file.write(output.toString());
-                file.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            FileWriter file = new FileWriter("src/main/resources/output/output.json");
+            file.write(output.toString());
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getReportFromFileToFile(String file) throws Exception {
         isValidFile(!getFileExtension(file).equals("txt"), "UNSUPPORTED FILE TYPE! ACCEPTED ONLY .TXT .\n");
-        List<String> cities = readFromFile("src/main/resources/input/"+file);
-        for (String city: cities){
+        List<String> cities = readFromFile(file);
+        for (String city : cities) {
             JSONObject output = getFullWeatherReport(city);
             writeToFile(output);
         }
     }
 
     private void isValidFile(boolean file, String msg) throws Exception {
-        if (file){
+        if (file) {
             log.info(msg);
             throw new Exception(msg);
         }
@@ -157,7 +157,7 @@ public class FullWeatherReport {
     }
 
     public static void main(String[] args) throws Exception {
-        FullWeatherReport a= new FullWeatherReport();
+        FullWeatherReport a = new FullWeatherReport();
         a.getReportFromFileToFile("input.ss");
     }
 }
