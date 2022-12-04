@@ -99,7 +99,7 @@ public class FullWeatherReport {
     }
 
     private void checkNotNull(String fullName) throws Exception {
-        isValidFile(fullName.isEmpty(), "FILE NAME IS EMPTY!");
+        isValidFile(fullName.isEmpty(), "FILE NAME IS EMPTY!\n");
     }
 
     private static JSONArray setForecastReports(ForecastReportDto freeDaysForecastDto) throws JSONException {
