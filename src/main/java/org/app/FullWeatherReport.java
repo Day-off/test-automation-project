@@ -76,7 +76,7 @@ public class FullWeatherReport {
     }
 
     public void getReportFromFileToFile(String file) throws Exception {
-        isValidFile(!getFileExtension(file).equals("txt"), "UNSUPPORTED FILE TYPE! ACCEPTED ONLY TXT\n");
+        isValidFile(!getFileExtension(file).equals("txt"), "UNSUPPORTED FILE TYPE! ACCEPTED ONLY .TXT .\n");
         List<String> cities = readFromFile("src/main/resources/input/"+file);
         for (String city: cities){
             JSONObject output = getFullWeatherReport(city);
