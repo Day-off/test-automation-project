@@ -65,9 +65,9 @@ public class FullWeatherReport {
         return cities;
     }
 
-    public void writeToFile(JSONObject output) {
+    public void writeToFile(JSONObject output, String city) {
         try {
-            FileWriter file = new FileWriter("src/main/resources/output/output.json");
+            FileWriter file = new FileWriter("src/main/resources/output/" + city + "_" + "output.json");
             file.write(output.toString());
             file.close();
         } catch (IOException e) {
@@ -80,7 +80,7 @@ public class FullWeatherReport {
         List<String> cities = readFromFile(file);
         for (String city : cities) {
             JSONObject output = getFullWeatherReport(city);
-            writeToFile(output);
+            writeToFile(output, city);
         }
     }
 
@@ -156,8 +156,4 @@ public class FullWeatherReport {
         mainDetails.put("temperatureUnit", mainDetailsDto.getMain().getTemperatureUnit());
     }
 
-    public static void main(String[] args) throws Exception {
-        FullWeatherReport a = new FullWeatherReport();
-        a.getReportFromFileToFile("input.ss");
-    }
 }
