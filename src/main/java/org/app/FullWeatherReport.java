@@ -75,12 +75,31 @@ public class FullWeatherReport {
             }
     }
 
-    public void getReportFromFileToFile(){
-        List<String> cities = readFromFile("src/main/resources/input/input.txt");
+    public void getReportFromFileToFile(String file) throws Exception {
+        isValidFile(!getFileExtension(file).equals("txt"), "UNSUPPORTED FILE TYPE!");
+        List<String> cities = readFromFile("src/main/resources/input/"+file);
         for (String city: cities){
             JSONObject output = getFullWeatherReport(city);
             writeToFile(output);
         }
+    }
+
+    private void isValidFile(boolean file, String msg) throws Exception {
+        if (file){
+            log.info(msg);
+            throw new Exception(msg);
+        }
+    }
+
+    public String getFileExtension(String fullName) throws Exception {
+        checkNotNull(fullName);
+        String fileName = new File(fullName).getName();
+        int dotIndex = fileName.lastIndexOf('.');
+        return (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
+    }
+
+    private void checkNotNull(String fullName) throws Exception {
+        isValidFile(fullName.isEmpty(), "FILE NAME IS EMPTY!");
     }
 
     private static JSONArray setForecastReports(ForecastReportDto freeDaysForecastDto) throws JSONException {
@@ -137,8 +156,8 @@ public class FullWeatherReport {
         mainDetails.put("temperatureUnit", mainDetailsDto.getMain().getTemperatureUnit());
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         FullWeatherReport a= new FullWeatherReport();
-        a.getReportFromFileToFile();
+        a.getReportFromFileToFile("");
     }
 }
