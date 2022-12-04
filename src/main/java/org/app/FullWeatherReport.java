@@ -10,12 +10,15 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 @Log
 public class FullWeatherReport {
 
-    public JSONObject getReportFromStdin(String city) {
+    public JSONObject getFullWeatherReport(String city) {
         try {
             MainDetailsDto mainDetailsDto = new WeatherApi().getMainDataDto(city);
             CurrentWeatherReportDto currentWeatherReportDto = new WeatherApi().getCurrentWeatherReportDto(city);
@@ -25,7 +28,7 @@ public class FullWeatherReport {
 
             setMainDetailsToOutPut(mainDetailsDto, output);
             setCurrentWeatherReportToOutPut(currentWeatherReportDto, output);
-            setForecastReport(freeDaysForecastDto, output);
+            setForecastReportToOutPut(freeDaysForecastDto, output);
 
 
             log.info(output.toString());
@@ -42,26 +45,61 @@ public class FullWeatherReport {
         Scanner scanner = new Scanner(System.in);
         String city = scanner.next();
         scanner.close();
-        return getReportFromStdin(city);
+        return getFullWeatherReport(city);
     }
 
-    private static void setForecastReport(ForecastReportDto freeDaysForecastDto, JSONObject output) throws JSONException {
-        JSONArray forecastReport = getForecastReport(freeDaysForecastDto);
-        output.put("forecastReport", forecastReport);
+    public List<String> readFromFile(String fileName) {
+        List<String> cities = new ArrayList<>();
+        try {
+            File file = new File(fileName);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                cities.add(line);
+            }
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return cities;
     }
 
-    private static JSONArray getForecastReport(ForecastReportDto freeDaysForecastDto) throws JSONException {
+    public void writeToFile(JSONObject output){
+        try {
+                FileWriter file = new FileWriter("src/main/resources/output/output.json");
+                file.write(output.toString());
+                file.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    public void getReportFromFileToFile(){
+        List<String> cities = readFromFile("src/main/resources/input/input.txt");
+        for (String city: cities){
+            JSONObject output = getFullWeatherReport(city);
+            writeToFile(output);
+        }
+    }
+
+    private static JSONArray setForecastReports(ForecastReportDto freeDaysForecastDto) throws JSONException {
         JSONArray forecastReport = new JSONArray();
         for (WeatherReport weatherReport : freeDaysForecastDto.getFreeDaysReports()) {
             JSONObject report = new JSONObject();
             JSONObject weather = new JSONObject();
-            setWeatherReport(forecastReport, weatherReport, report, weather);
+            setForecastWeatherReport(forecastReport, weatherReport, report, weather);
         }
 
         return forecastReport;
     }
 
-    private static void setWeatherReport(JSONArray forecastReport, WeatherReport weatherReport, JSONObject report, JSONObject weather) throws JSONException {
+    private static void setForecastReportToOutPut(ForecastReportDto freeDaysForecastDto, JSONObject output) throws JSONException {
+        JSONArray forecastReport = setForecastReports(freeDaysForecastDto);
+        output.put("forecastReport", forecastReport);
+    }
+
+    private static void setForecastWeatherReport(JSONArray forecastReport, WeatherReport weatherReport, JSONObject report, JSONObject weather) throws JSONException {
         report.put("date", weatherReport.getDt());
         weather.put("temperature", weatherReport.getMain().getTemp());
         weather.put("humidity", weatherReport.getMain().getHumidity());
@@ -97,8 +135,10 @@ public class FullWeatherReport {
         mainDetails.put("city", mainDetailsDto.getCity());
         mainDetails.put("coordinates", mainDetailsDto.getCoordinates().getLatAndLon());
         mainDetails.put("temperatureUnit", mainDetailsDto.getMain().getTemperatureUnit());
-
-
     }
 
+    public static void main(String[] args) {
+        FullWeatherReport a= new FullWeatherReport();
+        a.getReportFromFileToFile();
+    }
 }
