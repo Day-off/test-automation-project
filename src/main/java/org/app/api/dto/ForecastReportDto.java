@@ -24,13 +24,13 @@ public class ForecastReportDto {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         WeatherReport[] forecastReport = new WeatherReport[3];
-        for (int i = 0; i <= weatherReports.length - 1; i++) {
+        for (int i = 0; i <= getWeatherReports().length - 1; i++) {
 
             if (forecastReport[2] != null) {
                 break;
             }
 
-            WeatherReport weatherReport = weatherReports[i];
+            WeatherReport weatherReport = getWeatherReports()[i];
 
             if (isNextDay(check, formatter, weatherReport)) {
                 check = weatherReport.getDt();
