@@ -6,6 +6,7 @@ import org.codehaus.jettison.json.JSONObject;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 @Log
@@ -44,11 +45,19 @@ public class FullWeatherReport {
 
     public void writeToFile(JSONObject output, String city) {
         try {
-            FileWriter file = new FileWriter("src/main/resources/output/" + city + "_" + "output.json");
-            file.write(output.toString());
-            file.close();
+            isFileExists(city);
+            FileWriter fileWriter = new FileWriter("src/main/resources/output/" + city + "_" + "output.json");
+            fileWriter.write(output.toString());
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void isFileExists(String city) {
+        File file = new File("src/main/resources/output/" + city + "_" + "output.json");
+        if (file.exists()) {
+            log.info("THE FILE WILL BE OVERWRITTEN");
         }
     }
 
@@ -57,7 +66,15 @@ public class FullWeatherReport {
         List<String> cities = readFromFile(file);
         for (String city : cities) {
             JSONObject output = getFullWeatherReport(city);
+            createFile(city, output);
+        }
+    }
+
+    private void createFile(String city, JSONObject output) {
+        if (!Objects.equals(output.toString(), "{}")) {
             writeToFile(output, city);
+        } else {
+            log.info("INVALID CITY NAME");
         }
     }
 
@@ -79,4 +96,7 @@ public class FullWeatherReport {
         isValidFile(fullName.isEmpty(), "FILE NAME IS EMPTY!\n");
     }
 
+    public static void main(String[] args) throws Exception {
+        new FullWeatherReport().getReportFromFileToFile("input.txt");
+    }
 }

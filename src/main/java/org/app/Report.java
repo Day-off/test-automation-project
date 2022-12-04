@@ -25,7 +25,9 @@ public class Report {
         this.mainDetailsDto = new WeatherApi().getMainDataDto(city);
         this.currentWeatherReportDto = new WeatherApi().getCurrentWeatherReportDto(city);
         this.freeDaysForecastDto = new WeatherApi().getFreeDaysForecastDto(city);
-        createReport();
+        if (mainDetailsDto.getCity() != null) {
+            createReport();
+        }
     }
 
 
@@ -34,7 +36,6 @@ public class Report {
             setMainDetailsToOutPut();
             setCurrentWeatherReportToOutPut();
             setForecastReportToOutPut();
-            log.info(output.toString());
 
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -46,7 +47,7 @@ public class Report {
         output.put("forecastReport", forecastReport);
     }
 
-    private  JSONArray setForecastReports() throws JSONException {
+    private JSONArray setForecastReports() throws JSONException {
         JSONArray forecastReport = new JSONArray();
         for (WeatherReport weatherReport : freeDaysForecastDto.getFreeDaysReports()) {
             JSONObject report = new JSONObject();
@@ -57,7 +58,7 @@ public class Report {
         return forecastReport;
     }
 
-    private  void setForecastWeatherReport(JSONArray forecastReport, WeatherReport weatherReport, JSONObject report, JSONObject weather) throws JSONException {
+    private void setForecastWeatherReport(JSONArray forecastReport, WeatherReport weatherReport, JSONObject report, JSONObject weather) throws JSONException {
         report.put("date", weatherReport.getDt());
         weather.put("temperature", weatherReport.getMain().getTemp());
         weather.put("humidity", weatherReport.getMain().getHumidity());
@@ -66,7 +67,7 @@ public class Report {
         forecastReport.put(report);
     }
 
-    public  void setCurrentWeatherReportToOutPut() throws JSONException {
+    public void setCurrentWeatherReportToOutPut() throws JSONException {
         JSONObject currentWeatherReport = new JSONObject();
         setCurrentWeatherReport(currentWeatherReport);
         output.put("currentWeatherReport", currentWeatherReport);
