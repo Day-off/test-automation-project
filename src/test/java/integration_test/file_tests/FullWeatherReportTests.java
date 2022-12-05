@@ -4,7 +4,6 @@ import org.app.FullWeatherReport;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
-import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,19 +12,9 @@ class FullWeatherReportTests {
 
 
     @BeforeEach
-    void initializeCurrentWeatherHandler() throws Exception {
+    void initializeCurrentWeatherHandler() {
         FullWeatherReport fullWeatherReport = new FullWeatherReport();
         fullWeatherReport.getReportFromFileToFile("input.txt");
-    }
-
-    @Test
-    void inputFileNotExist() {
-        try {
-            new FullWeatherReport().readFromFile("src/main/resources/input/Tallinn_output.txt");
-        } catch (Exception e) {
-            assertThat(e)
-                    .isInstanceOf(IOException.class);
-        }
     }
 
     @Test

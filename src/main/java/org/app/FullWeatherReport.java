@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 @Log
 public class FullWeatherReport {
 
     public JSONObject getFullWeatherReport(String city) {
         Report report = new Report(city);
-        log.info(report.getOutput().toString());
         return report.getOutput();
     }
 
     public JSONObject getReportFromStdin() {
-        log.info("Enter city: ");
+        log.log(Level.INFO, "Enter city: ");
         Scanner scanner = new Scanner(System.in);
         String city = scanner.next();
         scanner.close();
@@ -57,46 +57,57 @@ public class FullWeatherReport {
     private static void isFileExists(String city) {
         File file = new File("src/main/resources/output/" + city + "_" + "output.json");
         if (file.exists()) {
-            log.info("THE FILE WILL BE OVERWRITTEN");
+            log.log(Level.INFO, "THE FILE WILL BE OVERWRITTEN");
         }
     }
 
-    public void getReportFromFileToFile(String file) throws Exception {
-        isValidFile(!getFileExtension(file).equals("txt"), "UNSUPPORTED FILE TYPE! ACCEPTED ONLY .TXT .\n");
-        List<String> cities = readFromFile(file);
+    public void getReportFromFileToFile(String file) {
+        List<String> cities = validateFile(file);
         for (String city : cities) {
             JSONObject output = getFullWeatherReport(city);
             createFile(city, output);
         }
     }
 
+    private List<String> validateFile(String file) {
+        List<String> cities;
+        if (isValidFile(!getFileExtension(file).equals("txt"), "UNSUPPORTED FILE TYPE! ACCEPTED ONLY .TXT .\n")) {
+            cities = readFromFile(file);
+        } else {
+            cities = new ArrayList<>();
+        }
+        return cities;
+    }
+
     private void createFile(String city, JSONObject output) {
         if (!Objects.equals(output.toString(), "{}")) {
             writeToFile(output, city);
         } else {
-            log.info("INVALID CITY NAME");
+            log.log(Level.WARNING, "INVALID CITY NAME");
         }
     }
 
-    private void isValidFile(boolean file, String msg) throws Exception {
+    private boolean isValidFile(boolean file, String msg) {
         if (file) {
-            log.info(msg);
-            throw new Exception(msg);
+            log.log(Level.WARNING, msg);
+            return false;
+        } else {
+            return true;
         }
     }
 
-    public String getFileExtension(String fullName) throws Exception {
+    public String getFileExtension(String fullName) {
         checkNotNull(fullName);
         String fileName = new File(fullName).getName();
         int dotIndex = fileName.lastIndexOf('.');
         return (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
     }
 
-    private void checkNotNull(String fullName) throws Exception {
+    private void checkNotNull(String fullName) {
         isValidFile(fullName.isEmpty(), "FILE NAME IS EMPTY!\n");
     }
 
-    public static void main(String[] args) throws Exception {
-        new FullWeatherReport().getReportFromFileToFile("input.txt");
+    public static void main(String[] args) {
+        new FullWeatherReport().getReportFromFileToFile("input.css");
     }
 }

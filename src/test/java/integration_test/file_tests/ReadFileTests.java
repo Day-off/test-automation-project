@@ -24,29 +24,4 @@ class ReadFileTests {
         assertThat(cities.get(0)).isEqualTo("Tallinn");
     }
 
-
-    @Test
-    void cantReadrEmptyFileName() {
-        try {
-            String EMPTY_NAME = "";
-            new FullWeatherReport().readFromFile(EMPTY_NAME);
-        }catch (Exception e){
-            assertThat(e)
-                    .isInstanceOf(Exception.class)
-                    .hasMessage("FILE NAME IS EMPTY!\n");
-        }
-    }
-
-    @Test
-    void cantReadrUnsupportedFileType() {
-        try {
-            String UNSUPPORTED_NAME = "input.git";
-            new FullWeatherReport().readFromFile(UNSUPPORTED_NAME);
-        }catch (Exception e){
-            assertThat(e)
-                    .isInstanceOf(Exception.class)
-                    .hasMessage("UNSUPPORTED FILE TYPE! ACCEPTED ONLY .TXT .\n");
-        }
-    }
-
 }
