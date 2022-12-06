@@ -3,6 +3,7 @@ package integration_test.file_tests;
 import org.app.FullWeatherReport;
 import org.junit.jupiter.api.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +15,9 @@ class FullWeatherReportTests {
     @BeforeEach
     void initializeCurrentWeatherHandler() {
         FullWeatherReport fullWeatherReport = new FullWeatherReport();
-        fullWeatherReport.getReportFromFileToFile("input.txt");
+        String CITY = "input.txt";
+        System.setIn(new ByteArrayInputStream(CITY.getBytes()));
+        fullWeatherReport.getReportFromFileToFile();
     }
 
     @Test

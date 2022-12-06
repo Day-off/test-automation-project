@@ -1,7 +1,6 @@
 package org.app;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
 import org.app.api.WeatherApi;
 import org.app.api.dto.CurrentWeatherReportDto;
 import org.app.api.dto.ForecastReportDto;
@@ -11,7 +10,6 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-@Log
 @AllArgsConstructor
 public class Report {
 

@@ -1,6 +1,6 @@
 package org.app;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.codehaus.jettison.json.JSONObject;
 
 import java.io.*;
@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.logging.Level;
 
-@Log
+@Slf4j
 public class FullWeatherReport {
 
     public JSONObject getFullWeatherReport(String city) {
@@ -19,10 +18,15 @@ public class FullWeatherReport {
     }
 
     public JSONObject getReportFromStdin() {
-        log.log(Level.INFO, "Enter city: ");
+        log.info("Enter city: ");
         Scanner scanner = new Scanner(System.in);
         String city = scanner.next();
         scanner.close();
+        return getFullWeatherReport(city);
+    }
+
+    public JSONObject getReportFromStdin(String city) {
+        log.info("Default city: " + city);
         return getFullWeatherReport(city);
     }
 
@@ -57,11 +61,24 @@ public class FullWeatherReport {
     private static void isFileExists(String city) {
         File file = new File("src/main/resources/output/" + city + "_" + "output.json");
         if (file.exists()) {
-            log.log(Level.INFO, "THE FILE WILL BE OVERWRITTEN");
+            log.info("THE FILE WILL BE OVERWRITTEN");
+        }
+    }
+
+    public void getReportFromFileToFile() {
+        log.info("Enter file name: ");
+        Scanner scanner = new Scanner(System.in);
+        String file = scanner.next();
+        scanner.close();
+        List<String> cities = validateFile(file);
+        for (String city : cities) {
+            JSONObject output = getFullWeatherReport(city);
+            createFile(city, output);
         }
     }
 
     public void getReportFromFileToFile(String file) {
+        log.info("Default file: " + file);
         List<String> cities = validateFile(file);
         for (String city : cities) {
             JSONObject output = getFullWeatherReport(city);
@@ -80,16 +97,20 @@ public class FullWeatherReport {
     }
 
     private void createFile(String city, JSONObject output) {
-        if (!Objects.equals(output.toString(), "{}")) {
-            writeToFile(output, city);
+        if (isEmpty(output)) {
+            log.error("INVALID CITY NAME");
         } else {
-            log.log(Level.WARNING, "INVALID CITY NAME");
+            writeToFile(output, city);
         }
+    }
+
+    private static boolean isEmpty(JSONObject output) {
+        return Objects.equals(output.toString(), "{}");
     }
 
     private boolean isValidFile(boolean file, String msg) {
         if (file) {
-            log.log(Level.WARNING, msg);
+            log.error(msg);
             return false;
         } else {
             return true;
@@ -108,6 +129,14 @@ public class FullWeatherReport {
     }
 
     public static void main(String[] args) {
-        new FullWeatherReport().getReportFromFileToFile("input.css");
+        for (String arg : args) {
+            switch (arg) {
+                case "1" -> log.info(new FullWeatherReport().getReportFromStdin().toString());
+                case "2" -> new FullWeatherReport().getReportFromFileToFile();
+                case "3" -> log.info(new FullWeatherReport().getReportFromStdin("Tallinn").toString());
+                case "4" -> new FullWeatherReport().getReportFromFileToFile("input.txt");
+            }
+        }
     }
+
 }
