@@ -1,3 +1,25 @@
+# Project description
+
+Create an application which reads an input file of city names and produces and output file with weather information about those cities:
+- Main details:
+    - City name
+    - Coordinates in the format latitude, longitude: "59.44, 24.75"
+    - Temperature unit
+- Current weather report:
+    - weather report date (DD-MM-YYYY)
+    - temperature in Celsius
+    - humidity
+    - pressure
+- Following 3-day forecast (not counting current date) in ascending order:
+    - forecast date (DD-MM-YYYY)
+    - average temperature in Celsius
+    - average humidity
+    - average pressure
+
+Use the [OpenWeatherMap API](https://openweathermap.org/api):
+- [current weather data](https://openweathermap.org/current)
+- [5-day weather forecast](https://openweathermap.org/forecast5)
+
 ## Technical Part
 
 ### What stack is used:
